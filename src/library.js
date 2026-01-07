@@ -104,4 +104,21 @@ export class Library {
       }
     });
   }
+
+  searchBooks(query) {
+    const titleRes = this.getBook(query, "title");
+    const categoryRes = this.getBook(query, "category");
+    return titleRes || categoryRes;
+  }
+
+  getLibrarySummary() {
+    const expirBooks = getExpiringBooks();
+    const lowCopyBooks = getLowCopyBooks();
+    return {
+      totalBooks: this.books,
+      totalCopies: this.books.reduce((b1, b2) => b1.copies + b2.copies, 0),
+      lowCopyCount: lowCopyBooks,
+      expiringSoonCount: expirBooks,
+    };
+  }
 }
