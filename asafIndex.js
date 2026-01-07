@@ -1,3 +1,5 @@
+import { validateBook } from "./utils/function.js";
+
 export class Library {
   constructor() {
     this.books = [];
@@ -11,8 +13,8 @@ export class Library {
 
   addBook(book) {
     // TO DO  --  לפתוח לאחר שיש את הפונקצייה --
-    // const isValid = validateBook(book);
-    // if (!isValid.status) return 'Book not valid'
+    const isValid = validateBook(book);
+    if (!isValid.validity) return 'Book not valid'
 
     const bookfromData = this.getBook(book.id);
     if (bookfromData) return "Book is alredy exist";
