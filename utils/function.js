@@ -23,17 +23,9 @@ export function validateBook(book) {
             failed = true;
             toChange.title = "title is missing or not a string"
         }
-        if (!category || !Array.isArray(category) || category.length < 1) {
+        if (!category || typeof (category) !== 'string' || category.length < 1) {
             failed = true;
-            toChange.category = "category is missing or not an array"
-        } else {
-            for (let i = 0; i < category.length; i++) {
-                const element = category[i];
-                if (!element || typeof (element) !== 'string' || element.length < 1) {
-                    failed = true;
-                    toChange.category = "vars of category is missing or not a string"
-                }
-            }
+            toChange.category = "category is missing or not a string"
         }
         if (!copies || isNaN(copies) || copies < 1) {
             failed = true;
@@ -51,9 +43,9 @@ export function validateBook(book) {
         }
     }
     if (failed) {
-        return { vlidity: false, message: `book is invalid here's why `, toChange }
+        return { validity: false, message: `book is invalid here's why `, toChange }
     }
-    return { vlidity: true, message: `book's valid, well done champ!` }
+    return { validity: true, message: `book's valid, well done champ!` }
 }
 
 export function normalizeBook(book) {
