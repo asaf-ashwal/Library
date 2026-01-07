@@ -8,8 +8,9 @@
   },
   "scripts": {
     "asaf": "node asafIndex.js",
-    "ud": "node udIndex.js",
-    "evya": "node evyaIndex.js",
+    "dev":"node index.js",
+    "ud":"node udIndex.js",
+    "evya":"node evyaIndex.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
