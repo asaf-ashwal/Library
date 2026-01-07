@@ -1,5 +1,3 @@
-
-
 export class Library {
   constructor() {
     this.books = [];
@@ -31,5 +29,79 @@ export class Library {
     this.books.splice(bookindex, 1);
     console.log({ bookDeleted: book });
     return true;
+  }
+
+  getLowCopyBooks() {
+    const result = [];
+    this.books.forEach((book) => {
+      if (book.copies < book.minCopies) {
+        result.push({ ...book, amount: book.minCopies - book.copies });
+      }
+      if (result.length) {
+        result.sort(function (a, b) {
+          return a.copies / a.minCopies - b.copies / b.minCopies;
+        });
+      }
+      return result;
+    });
+  }
+
+  getExpiringBooks(daysAhead) {
+    const today = new Date();
+    const expayerDate = new Date(today);
+    const result = [];
+    expayerDate.setDate(expayerDate.getDate() + daysAhead);
+
+    this.books.forEach((book) => {
+      if (book.expiresAt < expayerDate) {
+        result.push({ ...book, amount: book.copies });
+      }
+      if (result.length) {
+        result.sort(function (a, b) {
+          return a.copies / a.minCopies - b.copies / b.minCopies;
+        });
+      }
+      return result;
+    });
+
+    // const result = this.books.filter((book) => book.expiresAt < expayerDate);
+    // return result;
+  }
+
+  generatePurchaseList() {
+    const expirBooks = getExpiringBooks();
+    const lowCopyBooks = getLowCopyBooks();
+    expirBooks.forEach((book) => {
+      const tempBook = this.purchaseList.find(
+        (inBook) => book.title === inBook.title
+      );
+      if (tempBook) {
+        tempBook.amountToBuy += book.amount;
+        if (tempBook.reason !== "expiring_soon") tempBook.reason = "both";
+      } else {
+        this.purchaseList.push({
+          title: book.title,
+          category: book.category,
+          amountToBuy: book.amount,
+          reason: "expiring_soon",
+        });
+      }
+    });
+    lowCopyBooks.forEach((book) => {
+      const tempBook = this.purchaseList.find(
+        (inBook) => book.title === inBook.title
+      );
+      if (tempBook) {
+        tempBook.amountToBuy += book.amount;
+        if (tempBook.reason !== "low_copies") tempBook.reason = "both";
+      } else {
+        this.purchaseList.push({
+          title: book.title,
+          category: book.category,
+          amountToBuy: book.amount,
+          reason: "low_copies",
+        });
+      }
+    });
   }
 }
