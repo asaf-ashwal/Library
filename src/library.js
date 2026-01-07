@@ -31,6 +31,23 @@ export class Library {
     return true;
   }
 
+  updateCopies(bookId, delta) {
+    if (!bookId || !delta) return `Error: Incorrect data`
+
+      const [res] = this.getBook(bookId)
+    if (!res) return `Error: No found book  by ID`
+    const copyres = { ...res }
+
+    if ((copyres.copies += delta) <= 0) {
+      const tempres = (`number of books that you rssive is: ${res.copies}.`)
+      res.copies = 0
+      return tempres
+    } else {
+      res.copies += delta
+      return (`Number of books left in the library is: ${res.copies}.`)
+    }
+  }
+
   getLowCopyBooks() {
     const result = [];
     this.books.forEach((book) => {
