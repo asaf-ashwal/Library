@@ -7,13 +7,16 @@
     "test": "test"
   },
   "scripts": {
-    "asaf":"node asafIndex.js",
-    "ud":"node udIndex.js",
-    "evya":"node evyaIndex.js",
+    "asaf": "node asafIndex.js",
+    "ud": "node udIndex.js",
+    "evya": "node evyaIndex.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "module",
+  "dependencies": {
+    "uuid": "^13.0.0"
+  }
 }
