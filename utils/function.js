@@ -56,4 +56,12 @@ export function validateBook(book) {
     return { vlidity: true, message: `book's valid, well done champ!` }
 }
 
-console.log(validateBook(book))
+export function normalizeBook(book) {
+    book.title = book.title.trim()
+    book.category = book.category.trim()
+    book.copies = Number(book.copies)
+    book.minCopies = Number(book.minCopies)
+    book.expiresAt = book.expiresAt.trim()
+    if (!book.copies || !book.minCopies) return `Error: Unable to clean`
+    return book
+};
